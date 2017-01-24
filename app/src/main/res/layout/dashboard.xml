@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <TextView
+        android:text="Meeting Event #1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meetingevent1"
+        android:textSize="45dp"
+        android:layout_marginTop="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/border"
+        />
+
+    <!--<TextView
+        android:text="Back Out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Backout"
+        android:textSize="30dp"
+        android:layout_alignBaseline="@+id/meetingevent1"
+        android:layout_alignBottom="@+id/meetingevent1"
+        android:layout_toRightOf="@+id/meetingevent1"
+        android:layout_toEndOf="@+id/meetingevent1"
+        android:background="@drawable/border"
+        />-->
+
+
+</RelativeLayout>
