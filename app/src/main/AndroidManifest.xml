@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".loginScreen" android:label="@string/app_name"></activity>
+        <activity android:name=".Dashboard" android:label="MeetEz"></activity>
     </application>
 
 </manifest>
