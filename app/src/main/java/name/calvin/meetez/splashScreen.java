@@ -27,7 +27,7 @@ public class splashScreen extends Activity {
                 } finally {
                     finish();
                     Intent i = new Intent();
-                    i.setClassName("name.calvin.meetez", "name.calvin.meetez.loginScreen");
+                    i.setClassName("name.calvin.meetez", "name.calvin.meetez.Dashboard");
                     startActivity(i);
                 }
             }
