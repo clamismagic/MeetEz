@@ -27,6 +27,7 @@ public class splashScreen extends Activity {
                 } finally {
                     finish();
                     Intent i = new Intent();
+                    // redirect to Dashboard activity
                     i.setClassName("name.calvin.meetez", "name.calvin.meetez.Dashboard");
                     startActivity(i);
                 }
