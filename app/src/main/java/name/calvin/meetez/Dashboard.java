@@ -14,12 +14,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.view.View.OnLongClickListener;
+import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 
-public class Dashboard extends Activity {
+public class Dashboard extends Activity implements OnClickListener {
 
     private Button backout;
     private TextView meetingevent1;
@@ -32,6 +33,7 @@ public class Dashboard extends Activity {
         setContentView(R.layout.dashboard);
         backout=(Button)findViewById(R.id.backout);
         backout.setVisibility(View.GONE);
+        backout.setOnClickListener(this);
         meetingevent1 = (TextView) findViewById(R.id.meetingevent1);
         meetingevent1.setOnLongClickListener(click_listener);
     }
