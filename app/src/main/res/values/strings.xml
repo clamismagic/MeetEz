@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">MeetEz</string>
-    <string name="username">Username:</string>
-    <string name="enter_username">Enter username</string>
-    <string name="password">Password:</string>
-    <string name="enter_password">Enter password</string>
-    <string name="login">Login</string>
-    <string name="or">or</string>
-    <string name="register">Register</string>
+    <string name="backout">Back out</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="create_event">Create Event</string>
+    <string name="location_gen">Location Generator</string>
 </resources>
