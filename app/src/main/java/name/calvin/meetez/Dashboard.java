@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.view.View.OnLongClickListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -31,6 +32,10 @@ public class Dashboard extends Activity {
         @Override
         public boolean onLongClick(View view) {
            // meetingevent1.;
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) meetingevent1.getLayoutParams();
+            //noinspection ResourceType
+            layoutParams.leftMargin = -100;
+            meetingevent1.setLayoutParams(layoutParams);
             backout.setVisibility(View.VISIBLE);
             return true;
         }
