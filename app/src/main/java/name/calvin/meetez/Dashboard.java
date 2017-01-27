@@ -35,12 +35,30 @@ public class Dashboard extends Activity implements OnClickListener {
         backout.setVisibility(View.GONE);
         backout.setOnClickListener(this);
         meetingevent1 = (TextView) findViewById(R.id.meetingevent1);
-        meetingevent1.setOnLongClickListener(click_listener);
+        meetingevent1.setOnLongClickListener(long_click_listener);
+        meetingevent1.setOnClickListener(click_listener);
     }
 
+    private OnClickListener click_listener = new OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+
+            Intent intent = null;
+            switch (view.getId()) {
+                case R.id.meetingevent1:
+                    intent = new Intent(getApplicationContext(), Description.class);
+                    if (intent != null) {
+                        startActivity(intent);
+                    }
+                    break;
+            }
+        }
+
+    };
 
     /*     Making the button appear when text is long pressed */
-    private OnLongClickListener click_listener = new OnLongClickListener() {
+    private OnLongClickListener long_click_listener = new OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
            // meetingevent1.;
