@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:weightSum="1">
+    android:background="@color/background">
 
     <TextView
         android:text="@string/participants"
@@ -11,18 +11,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/participant"
         android:textSize="45dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/border"
         android:textColor="#0008ff"/>
 
-    <Button
+    <TextView
+        android:text="@string/participantName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/participantName"
+        android:textSize="40dp"
+        android:layout_below="@id/participant"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/border" />
+
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/removeParticipant"
-        android:layout_alignTop="@id/participant"
+        android:src="@drawable/removebutton"
+        android:adjustViewBounds="true"
+        android:maxWidth="60dp"
+        android:maxHeight="60dp"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@id/participantName"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:contentDescription="Remove Participants"/>
 
-</LinearLayout>
+</RelativeLayout>
