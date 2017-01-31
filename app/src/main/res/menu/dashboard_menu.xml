@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/updateprofile"
+    <!--<item android:id="@+id/updateprofile"
         android:title="@string/update_profile"
-        android:alphabeticShortcut="@string/update_profile"/>
+        android:alphabeticShortcut="@string/update_profile"/>-->
     <item android:id="@+id/createevent"
         android:title="@string/create_event"
         android:alphabeticShortcut="@string/create_event"/>

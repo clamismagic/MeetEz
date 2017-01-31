@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class Description extends Activity implements OnClickListener{
 
@@ -47,12 +48,12 @@ public class Description extends Activity implements OnClickListener{
         switch (v.getId()) {
             case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Are you sure you want to back out of this event?");
+                builder.setMessage("Are you sure you want to delete this event?");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
-
+                        Toast.makeText(getBaseContext(),"You deleted the event" ,  Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });

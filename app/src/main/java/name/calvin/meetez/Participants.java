@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class Participants extends Activity implements OnClickListener{
 
@@ -30,7 +31,7 @@ public class Participants extends Activity implements OnClickListener{
 
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
-
+                        Toast.makeText(getBaseContext(),"You removed the participant." ,  Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
