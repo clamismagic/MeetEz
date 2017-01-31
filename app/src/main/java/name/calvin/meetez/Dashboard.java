@@ -83,9 +83,6 @@ public class Dashboard extends Activity implements OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.updateprofile:
-                //startActivity(new Intent(this, .class));
-                return true;
             //more items go here, if any...
             case R.id.createevent:
 
