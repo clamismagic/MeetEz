@@ -45,7 +45,7 @@ public class Description extends Activity implements OnClickListener{
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.backout:
+            case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Are you sure you want to back out of this event?");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
