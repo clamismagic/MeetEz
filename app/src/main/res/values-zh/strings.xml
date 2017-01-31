@@ -8,4 +8,6 @@
     <string name="login">登入</string>
     <string name="or">或</string>
     <string name="register">注册</string>
+    <string name="backout">退出</string>
+    <string name="updateprofile">更新用户</string>
 </resources>
