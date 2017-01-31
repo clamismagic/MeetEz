@@ -1,12 +1,5 @@
 <resources>
     <string name="app_name">MeetEz</string>
-    <string name="username">Username:</string>
-    <string name="enter_username">Please enter your username</string>
-    <string name="password">Password:</string>
-    <string name="enter_password">Please enter your password</string>
-    <string name="login">Login</string>
-    <string name="or">or</string>
-    <string name="register">Register</string>
     <string name="backout">Back out</string>
     <string name="update_profile">Update Profile</string>
     <string name="create_event">Create Event</string>
@@ -15,5 +8,8 @@
     <string name="time">Time :</string>
     <string name="venue">Venue :</string>
     <string name="participants">Participants</string>
+    <string name="description">Description :</string>
+    <string name="delete">Delete</string>
+    <string name="editparticipants">Edit Participants</string>
     <string name="participantName">Participant 1</string>
 </resources>

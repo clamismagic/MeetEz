@@ -17,7 +17,7 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class Dashboard extends Activity implements OnClickListener {
@@ -108,7 +108,7 @@ public class Dashboard extends Activity implements OnClickListener {
 
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
-
+                        Toast.makeText(getBaseContext(),"You left the event" ,  Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
