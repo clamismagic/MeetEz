@@ -9,5 +9,10 @@
     <string name="or">或</string>
     <string name="register">注册</string>
     <string name="backout">退出</string>
-    <string name="updateprofile">更新用户</string>
+    <string name="update_profile">更新用户</string>
+    <string name="create_event">发起活动</string>
+    <string name="location_gen">地点寻找器</string>
+    <string name="date">日期 ：</string>
+    <string name="time">时间 ：</string>
+    <string name="venue">地点 ：</string>
 </resources>
