@@ -49,6 +49,7 @@ public class Description extends Activity implements OnClickListener {
             case R.id.delete:
                 Dialogbox dialog = new Dialogbox();
                 dialog.dialog(this);
+
         }
     }
 
