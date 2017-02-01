@@ -11,4 +11,5 @@
     <string name="delete">Delete</string>
     <string name="editparticipants">Edit Participants</string>
     <string name="participantName">Participant 1</string>
+    <string name="addParticipant">Add Participant</string>
 </resources>

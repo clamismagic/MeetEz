@@ -6,7 +6,7 @@
     android:background="@color/background">
 
     <TextView
-        android:text="@string/participants"
+        android:text="@string/addParticipant"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/participant"
@@ -28,20 +28,10 @@
         android:layout_alignParentLeft="true"
         android:background="@drawable/border" />
 
-    <Button
-        android:text="@string/addParticipant"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/participantName"
-        android:id="@+id/addParticipant"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:textColor="#777"/>
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/removeParticipant"
+        android:id="@+id/addParticipant"
         android:src="@drawable/removebutton"
         android:adjustViewBounds="true"
         android:maxWidth="60dp"

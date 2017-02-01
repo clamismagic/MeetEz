@@ -3,6 +3,7 @@ package name.calvin.meetez;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 public class Participants extends Activity implements OnClickListener{
 
     private ImageButton removeParticipant;
+    private Button addParticipant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,8 @@ public class Participants extends Activity implements OnClickListener{
         setContentView(R.layout.participants);
         removeParticipant=(ImageButton)findViewById(R.id.removeParticipant);
         removeParticipant.setOnClickListener(this);
+        addParticipant=(Button)findViewById(R.id.addParticipant);
+        addParticipant.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -48,6 +52,12 @@ public class Participants extends Activity implements OnClickListener{
 
                 AlertDialog alert = builder.create();
                 alert.show();
+            case R.id.addParticipant:
+                Intent intent = new Intent(getApplicationContext(), AddParticipant.class);
+                if (intent != null){
+                    startActivity(intent);
+                }
+                break;
         }
     }
 }
