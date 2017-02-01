@@ -26,12 +26,11 @@ public class Dashboard extends Activity implements OnClickListener {
     private TextView meetingevent1;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        backout=(Button)findViewById(R.id.backout);
+        backout = (Button) findViewById(R.id.backout);
         backout.setVisibility(View.GONE);
         backout.setOnClickListener(this);
         meetingevent1 = (TextView) findViewById(R.id.meetingevent1);
@@ -61,7 +60,7 @@ public class Dashboard extends Activity implements OnClickListener {
     private OnLongClickListener long_click_listener = new OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
-           // meetingevent1.;
+            // meetingevent1.;
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) meetingevent1.getLayoutParams();
             //noinspection ResourceType
             layoutParams.leftMargin = -100;
@@ -99,30 +98,12 @@ public class Dashboard extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Are you sure you want to back out of this event?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                Dialogbox dialog = new Dialogbox();
+                dialog.dialog();
+                Toast.makeText(getBaseContext(), "You left the event", Toast.LENGTH_SHORT).show();
+        }
 
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                        Toast.makeText(getBaseContext(),"You left the event" ,  Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
 
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-        };
     }
 }
 

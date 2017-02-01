@@ -53,7 +53,10 @@ public class Description extends Activity implements OnClickListener{
 
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
-                        Toast.makeText(getBaseContext(),"You deleted the event" ,  Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent();
+                        i.putExtra("str", "backout");
+                        setResult(Dashboard.RESULT_OK, i);
+                        startActivity(i);
                         dialog.dismiss();
                     }
                 });
