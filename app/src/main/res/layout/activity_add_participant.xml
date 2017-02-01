@@ -28,17 +28,26 @@
         android:layout_alignParentLeft="true"
         android:background="@drawable/border" />
 
-    <ImageButton
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addParticipant"
-        android:src="@drawable/removebutton"
-        android:adjustViewBounds="true"
-        android:maxWidth="60dp"
-        android:maxHeight="60dp"
-        android:scaleType="fitXY"
-        android:layout_alignTop="@id/participantName"
+        android:scaleX="2.50"
+        android:scaleY="2.50"
+        android:layout_below="@+id/participant"
         android:layout_alignParentRight="true"
-        android:contentDescription="Remove Participants"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add"
+        android:text="@string/addParticipant"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
