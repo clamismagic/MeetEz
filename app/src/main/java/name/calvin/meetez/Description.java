@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-public class Description extends Activity implements OnClickListener{
+public class Description extends Activity implements OnClickListener {
 
     private Button delete;
     private Button editParticipants;
@@ -20,9 +20,9 @@ public class Description extends Activity implements OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.description);
-        delete=(Button)findViewById(R.id.delete);
+        delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(this);
-        editParticipants=(Button)findViewById(R.id.editparticipants);
+        editParticipants = (Button) findViewById(R.id.editparticipants);
         editParticipants.setOnClickListener(click_listener);
     }
 
@@ -47,32 +47,9 @@ public class Description extends Activity implements OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.delete:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Are you sure you want to delete this event?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                        Intent i = new Intent();
-                        i.putExtra("str", "backout");
-                        setResult(Dashboard.RESULT_OK, i);
-                        startActivity(i);
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
+                Dialogbox dialog = new Dialogbox();
+                dialog.dialog(this);
         }
     }
+
 }

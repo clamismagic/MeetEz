@@ -99,7 +99,7 @@ public class Dashboard extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.backout:
                 Dialogbox dialog = new Dialogbox();
-                dialog.dialog();
+                dialog.dialog(this);
                 Toast.makeText(getBaseContext(), "You left the event", Toast.LENGTH_SHORT).show();
         }
 
