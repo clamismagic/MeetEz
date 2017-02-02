@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/removeParticipant"
-        android:src="@drawable/removebutton"
+        android:src="@drawable/removeButton"
         android:adjustViewBounds="true"
         android:maxWidth="60dp"
         android:maxHeight="60dp"
