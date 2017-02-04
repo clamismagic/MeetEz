@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,13 +19,20 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class Dashboard extends Activity implements OnClickListener {
 
     private Button backout;
     private TextView meetingevent1;
-
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,10 @@ public class Dashboard extends Activity implements OnClickListener {
         meetingevent1 = (TextView) findViewById(R.id.meetingevent1);
         meetingevent1.setOnLongClickListener(long_click_listener);
         meetingevent1.setOnClickListener(click_listener);
+        sendRequest();
+
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        prefsEdit = prefs.edit();
     }
 
     private OnClickListener click_listener = new OnClickListener() {
@@ -103,6 +115,54 @@ public class Dashboard extends Activity implements OnClickListener {
         }
 
 
+    }
+
+    public void sendRequest() {
+        SendtoPHP sendtoPHP = new SendtoPHP();
+        sendtoPHP.execute(new String[] {
+                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=eventname"
+        });
+    }
+
+    private class SendtoPHP extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            String text = "";
+            try {
+                URL url = new URL(urls[0]);
+                URLConnection conn = url.openConnection();
+                InputStream inputStream = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                // Read Server Response
+                while ((line = reader.readLine()) != null) {
+                    // Append server response in string
+                    sb.append(line + "\n");
+                }
+                System.out.println("test success!");
+
+                text = sb.toString();
+                System.out.println(text);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    return text;
+                } catch (Exception e) {
+                    System.out.println(e);
+                    return "Error selecting record!";
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            System.out.println(result);
+            String toStringResult = "";
+
+        }
     }
 }
 
