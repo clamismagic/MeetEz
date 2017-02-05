@@ -2,7 +2,7 @@ package name.calvin.meetez;
 
 import android.provider.BaseColumns;
 
-public class Constants extends BaseColumns {
+public class Constants implements BaseColumns {
     public static final String EVENTS_TABLE = "events";
 
     // columns in the events table
