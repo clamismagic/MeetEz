@@ -1,6 +1,7 @@
 package name.calvin.meetez;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.MapFragment;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,10 @@ public class adHocMeeting extends Activity implements View.OnClickListener {
     private final int[] textViews = new int[10];
     private final int[] editTexts = new int[10];
     private final ArrayList<String> inputAddress = new ArrayList<>();
-    private final ArrayList<double[]> LatLng = new ArrayList<>();
+    private final ArrayList<Double> latitudes = new ArrayList<>();
+    private final ArrayList<Double> longitudes = new ArrayList<>();
+
+    private static final int fragmentID = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,16 +103,28 @@ public class adHocMeeting extends Activity implements View.OnClickListener {
         List<Address> addresses;
 
         for (String strAddress : inputAddress) {
-            System.out.println(strAddress);
             try {
                 addresses = geocoder.getFromLocationName(strAddress, 5);
                 Address location = addresses.get(0);
-                double[] getLatLng = {location.getLatitude(), location.getLongitude()};
-                System.out.println(getLatLng[0] + "," + getLatLng[1]);
-                LatLng.add(getLatLng);
+                latitudes.add(location.getLatitude());
+                longitudes.add(location.getLongitude());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        double midLat = 0, midLng = 0;
+        for (int i = 0; i < latitudes.size(); i++) {
+            midLat += latitudes.get(i);
+            midLng += longitudes.get(i);
+        }
+        midLat /= latitudes.size();
+        midLng /= longitudes.size();
+        System.out.println(midLat + "," + midLng);
+
+        MapFragment mapFragment = MapFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(fragmentID, mapFragment);
+        fragmentTransaction.commit();
     }
 }
