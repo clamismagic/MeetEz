@@ -16,6 +16,8 @@ import java.nio.BufferUnderflowException;
 
 public class adHocMeeting extends Activity implements AdapterView.OnItemSelectedListener {
 
+    private int[] textViews = new int[10];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +35,29 @@ public class adHocMeeting extends Activity implements AdapterView.OnItemSelected
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                int item = Integer.parseInt(adapterView.getItemAtPosition(pos).toString());
                 LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adhocmeeting);
-                for (int i = 1; i <= item; i++) {
-                    TextView addtextview = new TextView(adHocMeeting.this);
-                    addtextview.setText("Address " + i + ":");
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    linearLayout.addView(addtextview, layoutParams);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                for (int i : textViews) {
+                    if (i == 0) {
+                        break;
+                    } else {
+                        linearLayout.removeView(findViewById(i));
+                    }
+                }
+
+                for (int i = 0; i < textViews.length; i++) {
+                    textViews[i] = 0;
+                }
+
+                if (pos != 0) {
+                    int item = Integer.parseInt(adapterView.getItemAtPosition(pos).toString());
+                    for (int i = 0; i < item; i++) {
+                        TextView addtextview = new TextView(adHocMeeting.this);
+                        addtextview.setText("Address " + (i + 1) + ":");
+                        addtextview.setId(1000 + i);
+                        textViews[i] = 1000 + i;
+                        linearLayout.addView(addtextview);
+                    }
                 }
             }
 
