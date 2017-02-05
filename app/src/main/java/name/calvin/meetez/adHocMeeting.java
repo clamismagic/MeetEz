@@ -1,6 +1,8 @@
 package name.calvin.meetez;
 
 import android.app.Activity;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,10 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class adHocMeeting extends Activity implements View.OnClickListener {
 
-    private int[] textViews = new int[10];
-    private int[] editTexts = new int[10];
+    private final int[] textViews = new int[10];
+    private final int[] editTexts = new int[10];
+    private final ArrayList<String> inputAddress = new ArrayList<>();
+    private final ArrayList<double[]> LatLng = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +90,23 @@ public class adHocMeeting extends Activity implements View.OnClickListener {
                 break;
             }
             String input = ((EditText) findViewById(i)).getText().toString();
-            System.out.println(input);
+            inputAddress.add(input);
+        }
+
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addresses;
+
+        for (String strAddress : inputAddress) {
+            System.out.println(strAddress);
+            try {
+                addresses = geocoder.getFromLocationName(strAddress, 5);
+                Address location = addresses.get(0);
+                double[] getLatLng = {location.getLatitude(), location.getLongitude()};
+                System.out.println(getLatLng[0] + "," + getLatLng[1]);
+                LatLng.add(getLatLng);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
