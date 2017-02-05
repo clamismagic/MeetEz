@@ -2,10 +2,14 @@ package name.calvin.meetez;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -120,11 +125,11 @@ public class adHocMeeting extends Activity implements View.OnClickListener {
         }
         midLat /= latitudes.size();
         midLng /= longitudes.size();
-        System.out.println(midLat + "," + midLng);
+        double[] midpoint = {midLat, midLng};
 
-        MapFragment mapFragment = MapFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(fragmentID, mapFragment);
-        fragmentTransaction.commit();
+        Intent i = new Intent();
+        i.setClassName("name.calvin.meetez", "name.calvin.meetez.midpointMap");
+        i.putExtra("midpoint", midpoint);
+        startActivity(i);
     }
 }
