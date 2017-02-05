@@ -128,7 +128,7 @@ public class adHocMeeting extends Activity implements View.OnClickListener {
         double[] midpoint = {midLat, midLng};
 
         Intent i = new Intent();
-        i.setClassName("name.calvin.meetez", "name.calvin.meetez.midpointMap");
+        i.setClassName("name.calvin.meetez", "name.calvin.meetez.midpoint");
         i.putExtra("midpoint", midpoint);
         startActivity(i);
     }
