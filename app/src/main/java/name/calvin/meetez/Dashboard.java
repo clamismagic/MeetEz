@@ -100,7 +100,7 @@ public class Dashboard extends Activity implements OnClickListener {
         switch (item.getItemId()) {
             //more items go here, if any...
             case R.id.createevent:
-               Intent intent = new Intent(getApplicationContext(), CreateEvent.class);
+               intent = new Intent(getApplicationContext(), CreateEvent.class);
                 if (intent != null) {
                     startActivity(intent);
                 }
