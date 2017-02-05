@@ -16,4 +16,6 @@
     <!-- AdHocMeeting Activity -->
     <string name="adhocpax">Choose the number of people attending the meeting:</string>
     <string name="choosenumber">--Please choose--</string>
+    <string name="address">Address</string>
+    <string name="submit">Submit</string>
 </resources>
