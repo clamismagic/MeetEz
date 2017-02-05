@@ -100,10 +100,8 @@ public class Dashboard extends Activity implements OnClickListener {
         switch (item.getItemId()) {
             //more items go here, if any...
             case R.id.createevent:
-               intent = new Intent(getApplicationContext(), CreateEvent.class);
-                if (intent != null) {
-                    startActivity(intent);
-                }
+                intent.setClassName("name.calvin.meetez", "name.calvin.meetez.CreateEvent");
+                startActivity(intent);
                 break;
 
             case R.id.locationgen:
@@ -121,8 +119,6 @@ public class Dashboard extends Activity implements OnClickListener {
                 Dialogbox dialog = new Dialogbox();
                 dialog.dialog(this);
         }
-
-
     }
 
 
