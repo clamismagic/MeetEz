@@ -30,7 +30,7 @@ import java.net.URLConnection;
 public class Dashboard extends Activity implements OnClickListener {
 
     private Button backout;
-    private TextView meetingevent1;
+    private TextView meetingevent;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEdit;
 
@@ -41,13 +41,16 @@ public class Dashboard extends Activity implements OnClickListener {
         backout = (Button) findViewById(R.id.backout);
         backout.setVisibility(View.GONE);
         backout.setOnClickListener(this);
-        meetingevent1 = (TextView) findViewById(R.id.meetingevent1);
-        meetingevent1.setOnLongClickListener(long_click_listener);
-        meetingevent1.setOnClickListener(click_listener);
-        sendRequest();
+        meetingevent = (TextView) findViewById(R.id.meetingevent);
+        meetingevent.setOnLongClickListener(long_click_listener);
+        meetingevent.setOnClickListener(click_listener);
+        SendtoPHP sendtoPHP = new SendtoPHP();
+        sendtoPHP.execute(new String[] {
+                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
+        });
 
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        prefsEdit = prefs.edit();
+       /* SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        prefsEdit = prefs.edit();*/
     }
 
     private OnClickListener click_listener = new OnClickListener() {
@@ -73,10 +76,10 @@ public class Dashboard extends Activity implements OnClickListener {
         @Override
         public boolean onLongClick(View view) {
             // meetingevent1.;
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) meetingevent1.getLayoutParams();
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) meetingevent.getLayoutParams();
             //noinspection ResourceType
             layoutParams.leftMargin = -100;
-            meetingevent1.setLayoutParams(layoutParams);
+            meetingevent.setLayoutParams(layoutParams);
             backout.setVisibility(View.VISIBLE);
             return true;
         }
@@ -97,8 +100,11 @@ public class Dashboard extends Activity implements OnClickListener {
         switch (item.getItemId()) {
             //more items go here, if any...
             case R.id.createevent:
-
-                return true;
+               Intent intent = new Intent(getApplicationContext(), CreateEvent.class);
+                if (intent != null) {
+                    startActivity(intent);
+                }
+                break;
 
             case R.id.locationgen:
                 intent.setClassName("name.calvin.meetez", "name.calvin.meetez.adHocMeeting");
@@ -119,12 +125,6 @@ public class Dashboard extends Activity implements OnClickListener {
 
     }
 
-    public void sendRequest() {
-        SendtoPHP sendtoPHP = new SendtoPHP();
-        sendtoPHP.execute(new String[] {
-                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=eventname"
-        });
-    }
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {

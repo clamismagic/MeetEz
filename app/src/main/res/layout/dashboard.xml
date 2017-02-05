@@ -6,10 +6,9 @@
     android:background="@color/background">
 
     <TextView
-        android:text="Meeting Event #1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/meetingevent1"
+        android:id="@+id/meetingevent"
         android:textSize="45dp"
         android:layout_marginTop="42dp"
         android:layout_alignParentTop="true"
