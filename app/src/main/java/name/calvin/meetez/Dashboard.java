@@ -29,8 +29,8 @@ import java.net.URLConnection;
 
 public class Dashboard extends Activity implements OnClickListener {
 
-    private Button backout;
-    private TextView meetingevent;
+    private String[] recordArray;
+    private String[] resultArray;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEdit;
 
@@ -41,9 +41,6 @@ public class Dashboard extends Activity implements OnClickListener {
         backout = (Button) findViewById(R.id.backout);
         backout.setVisibility(View.GONE);
         backout.setOnClickListener(this);
-        meetingevent = (TextView) findViewById(R.id.meetingevent);
-        meetingevent.setOnLongClickListener(long_click_listener);
-        meetingevent.setOnClickListener(click_listener);
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[] {
                 "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
@@ -76,11 +73,12 @@ public class Dashboard extends Activity implements OnClickListener {
         @Override
         public boolean onLongClick(View view) {
             // meetingevent1.;
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) meetingevent.getLayoutParams();
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
             //noinspection ResourceType
             layoutParams.leftMargin = -100;
-            meetingevent.setLayoutParams(layoutParams);
-            backout.setVisibility(View.VISIBLE);
+            view.setLayoutParams(layoutParams);
+            // declare backout button here
+            //backout.setVisibility(View.VISIBLE);
             return true;
         }
     };
@@ -122,9 +120,10 @@ public class Dashboard extends Activity implements OnClickListener {
     }
 
 
-    private class SendtoPHP extends AsyncTask<String, Void, String> {
-        protected String doInBackground(String... urls) {
-            String text = "";
+    private class SendtoPHP extends AsyncTask<String[], Void, String[]> {
+        protected String[] doInBackground(String... urls) {
+            String text = "", textParticipant = "";
+            String[] returnArray = new String[2];
             try {
                 URL url = new URL(urls[0]);
                 URLConnection conn = url.openConnection();
@@ -143,11 +142,30 @@ public class Dashboard extends Activity implements OnClickListener {
                 text = sb.toString();
                 System.out.println(text);
 
+                URL url1 = new URL(urls[1]);
+                URLConnection conn1 = url1.openConnection();
+                InputStream inputStream1 = conn1.getInputStream();
+                BufferedReader reader1 = new BufferedReader(new InputStreamReader(inputStream1));
+                StringBuilder sb1 = new StringBuilder();
+                String line1 = null;
+
+                // Read Server Response
+                while ((line1 = reader1.readLine()) != null) {
+                    // Append server response in string
+                    sb1.append(line1 + "\n");
+                }
+                System.out.println("test success participant!");
+
+                textParticipant = sb1.toString();
+                System.out.println(textParticipant);
+                returnArray[0] = text;
+                returnArray[1] = textParticipant;
+
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    return text;
+                    return returnArray;
                 } catch (Exception e) {
                     System.out.println(e);
                     return "Error selecting record!";
@@ -156,9 +174,18 @@ public class Dashboard extends Activity implements OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String[] result) {
             System.out.println(result);
-            String toStringResult = "";
+            recordArray = result.split("\\?");
+            int i = 0;
+            for (String singleRecord : recordArray) {
+                resultArray = singleRecord.split("\\|");
+                TextView meetingevent = new TextView(Dashboard.this);
+                meetingevent.setText(resultArray[1]);
+                meetingevent.setId(10000 + i++);
+                meetingevent.setOnLongClickListener(long_click_listener);
+                meetingevent.setOnClickListener(click_listener);
+            }
 
         }
     }

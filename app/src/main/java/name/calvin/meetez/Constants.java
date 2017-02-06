@@ -11,5 +11,6 @@ public class Constants implements BaseColumns {
     public static final String EVENT_VENUE = "venue";
     public static final String EVENT_DESCRIPTION = "description";
     public static final String EVENT_PARTICIPANTS = "participants";
+    public static final String USER_CONTACT = "myContact";
 
 }

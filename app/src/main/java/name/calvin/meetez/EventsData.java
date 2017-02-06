@@ -22,7 +22,8 @@ public class EventsData extends SQLiteOpenHelper {
                 + EVENT_DATE + " DATE NOT NULL, "
                 + EVENT_VENUE + " TEXT NOT NULL, "
                 + EVENT_DESCRIPTION + " TEXT NOT NULL, "
-                + EVENT_PARTICIPANTS + " TEXT NOT NULL);");
+                + EVENT_PARTICIPANTS + " TEXT NOT NULL,"
+                + USER_CONTACT + " INTEGER NOT NULL);");
     }
 
     @Override
