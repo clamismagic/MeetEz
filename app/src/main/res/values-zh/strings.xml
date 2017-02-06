@@ -12,4 +12,10 @@
     <string name="delete">删除</string>
     <string name="editparticipants">编辑参加者</string>
     <string name="participantName">参加者 1</string>
+
+    <!-- adHocMeeting Activity -->
+    <string name="adhocpax">请选择出席此会议的人数：</string>
+    <string name="choosenumber">--请选择--</string>
+    <string name="address">地址</string>
+    <string name="submit">确认</string>
 </resources>

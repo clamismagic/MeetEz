@@ -12,4 +12,10 @@
     <string name="editparticipants">Edit Participants</string>
     <string name="participantName">Participant 1</string>
     <string name="addParticipant">Add Participant</string>
+
+    <!-- AdHocMeeting Activity -->
+    <string name="adhocpax">Choose the number of people attending the meeting:</string>
+    <string name="choosenumber">--Please choose--</string>
+    <string name="address">Address</string>
+    <string name="submit">Submit</string>
 </resources>

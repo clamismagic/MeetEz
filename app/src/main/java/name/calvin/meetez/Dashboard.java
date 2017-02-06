@@ -96,17 +96,17 @@ public class Dashboard extends Activity implements OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent();
         switch (item.getItemId()) {
             //more items go here, if any...
             case R.id.createevent:
-               Intent intent = new Intent(getApplicationContext(), CreateEvent.class);
-                if (intent != null) {
-                    startActivity(intent);
-                }
+                intent.setClassName("name.calvin.meetez", "name.calvin.meetez.CreateEvent");
+                startActivity(intent);
                 break;
 
             case R.id.locationgen:
-
+                intent.setClassName("name.calvin.meetez", "name.calvin.meetez.adHocMeeting");
+                startActivity(intent);
                 return true;
         }
         return false;
@@ -119,8 +119,6 @@ public class Dashboard extends Activity implements OnClickListener {
                 Dialogbox dialog = new Dialogbox();
                 dialog.dialog(this);
         }
-
-
     }
 
 
