@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import android.content.SharedPreferences;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -38,11 +40,22 @@ public class Dashboard extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        backout = (Button) findViewById(R.id.backout);
-        backout.setVisibility(View.GONE);
-        backout.setOnClickListener(this);
+        //backout = (Button) findViewById(R.id.backout);
+        //backout.setVisibility(View.GONE);
+        //backout.setOnClickListener(this);
+        File dbFile = this.getDatabasePath(Constants.EVENTS_TABLE);
+        if (!dbFile.exists()) {
+            // TODO make dialog box for new user signup
+        } else {
+            EventsData events = new EventsData(this);
+            EventsMethods eventsMethods = new EventsMethods();
+            // TODO call showEvents and process returned String
+            //Cursor cursor = eventsMethods.getEvents(events);
+        }
+
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[] {
+                // TODO do 'join table' for events and eventsContacts and contacts
                 "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
         });
 
@@ -120,10 +133,9 @@ public class Dashboard extends Activity implements OnClickListener {
     }
 
 
-    private class SendtoPHP extends AsyncTask<String[], Void, String[]> {
-        protected String[] doInBackground(String... urls) {
-            String text = "", textParticipant = "";
-            String[] returnArray = new String[2];
+    private class SendtoPHP extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            String text = "";
             try {
                 URL url = new URL(urls[0]);
                 URLConnection conn = url.openConnection();
@@ -142,30 +154,11 @@ public class Dashboard extends Activity implements OnClickListener {
                 text = sb.toString();
                 System.out.println(text);
 
-                URL url1 = new URL(urls[1]);
-                URLConnection conn1 = url1.openConnection();
-                InputStream inputStream1 = conn1.getInputStream();
-                BufferedReader reader1 = new BufferedReader(new InputStreamReader(inputStream1));
-                StringBuilder sb1 = new StringBuilder();
-                String line1 = null;
-
-                // Read Server Response
-                while ((line1 = reader1.readLine()) != null) {
-                    // Append server response in string
-                    sb1.append(line1 + "\n");
-                }
-                System.out.println("test success participant!");
-
-                textParticipant = sb1.toString();
-                System.out.println(textParticipant);
-                returnArray[0] = text;
-                returnArray[1] = textParticipant;
-
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    return returnArray;
+                    return text;
                 } catch (Exception e) {
                     System.out.println(e);
                     return "Error selecting record!";
@@ -174,7 +167,7 @@ public class Dashboard extends Activity implements OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(String result) {
             System.out.println(result);
             recordArray = result.split("\\?");
             int i = 0;
