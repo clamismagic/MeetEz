@@ -39,7 +39,9 @@ public class Description extends Activity implements OnClickListener {
         editParticipants.setOnClickListener(click_listener);
     }
 
-    protected void onResume(Bundle savedInstanceState) {
+    @Override
+    protected void onResume() {
+        super.onResume();
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
                 "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"

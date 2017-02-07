@@ -15,17 +15,6 @@
         />
 
     <TextView
-        android:text="@string/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="41dp"
-        android:id="@+id/date"
-        android:textSize="30sp"
-        android:layout_below="@+id/meetingevent1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:text="@string/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,11 +52,66 @@
         android:text="@string/create_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="66dp"
-        android:layout_marginEnd="66dp"
-        android:id="@+id/createevent" />
+        android:id="@+id/createevent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp" />
+
+    <TextView
+        android:text="@string/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date"
+        android:textSize="30sp"
+        android:layout_below="@+id/meetingevent"
+        android:layout_toRightOf="@id/date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="20"
+        android:layout_below="@+id/meetingevent"
+        android:layout_toRightOf="@+id/date"
+        android:layout_toEndOf="@+id/date"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/dateedit" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="20"
+        android:layout_above="@+id/venue"
+        android:layout_toRightOf="@id/time"
+        android:layout_alignLeft="@+id/dateedit"
+        android:layout_alignStart="@+id/dateedit"
+        android:id="@+id/timeedit" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="20"
+        android:layout_alignTop="@+id/venue"
+        android:layout_toRightOf="@id/venue"
+        android:layout_alignLeft="@+id/timeedit"
+        android:layout_alignStart="@+id/timeedit"
+        android:id="@+id/venueedit" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="20"
+        android:height="20px"
+        android:layout_below="@+id/description"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:id="@+id/descedit" />
 
 
 </RelativeLayout>
