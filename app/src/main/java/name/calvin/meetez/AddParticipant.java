@@ -2,7 +2,6 @@ package name.calvin.meetez;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,7 +37,7 @@ public class AddParticipant extends Activity implements OnClickListener {
         add.setEnabled(false);
         outputText = (TextView)findViewById(R.id.participantName);
         fetchContacts();
-        /*CheckBox checkBox = (CheckBox)findViewById(R.id.addParticipant);
+        CheckBox checkBox = (CheckBox)findViewById(R.id.addParticipant);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -48,7 +47,7 @@ public class AddParticipant extends Activity implements OnClickListener {
                     add.setEnabled(false);
                 }
             }
-        });*/
+        });
     }
 
 
@@ -143,10 +142,10 @@ public class AddParticipant extends Activity implements OnClickListener {
                     emailCursor.close();
                 }
 
-                output.append("\n");
+                output.append("|");
             }
-
-            outputText.setText(output);
+            String[] results = output.toString().split("\\|");
+            outputText.setText(results[0]);
         }
     }
 }
