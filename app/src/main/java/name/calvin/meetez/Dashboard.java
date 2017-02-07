@@ -31,8 +31,8 @@ import java.net.URLConnection;
 
 public class Dashboard extends Activity implements OnClickListener {
 
-    private String[] recordArray;
-    private String[] resultArray;
+    private String[] recordArray, resultArray;
+    private String[][] values;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEdit;
 
@@ -49,8 +49,12 @@ public class Dashboard extends Activity implements OnClickListener {
         } else {
             EventsData events = new EventsData(this);
             EventsMethods eventsMethods = new EventsMethods();
-            // TODO call showEvents and process returned String
-            //Cursor cursor = eventsMethods.getEvents(events);
+            String resultSQLite = eventsMethods.showEvents(eventsMethods.getEvents(events));
+            String[] records = resultSQLite.split("\\n");
+            int i = 0;
+            for (String eachRecord : records) {
+                values[i++] = eachRecord.split("\\t");
+            }
         }
 
         SendtoPHP sendtoPHP = new SendtoPHP();

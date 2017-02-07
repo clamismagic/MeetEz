@@ -27,5 +27,22 @@ public class EventsMethods {
         return db.query(EVENTS_TABLE, FROM, null, null, null, null, ORDER_BY);
     }
 
-    // TODO write showEvents() function
+    public String showEvents(Cursor cursor) {
+        StringBuilder builder = new StringBuilder("");
+        while (cursor.moveToNext()) {
+            String eventName = cursor.getString(1);
+            String eventDate = cursor.getString(2);
+            String eventVenue = cursor.getString(3);
+            String eventDescription = cursor.getString(4);
+            String eventParticipants = cursor.getString(5);
+            String userContact = cursor.getInt(6) + "";
+            builder.append(eventName).append("\t");
+            builder.append(eventDate).append("\t");
+            builder.append(eventVenue).append("\t");
+            builder.append(eventDescription).append("\t");
+            builder.append(eventParticipants).append("\t");
+            builder.append(userContact).append("\t\n");
+        }
+        return builder.toString();
+    }
 }
