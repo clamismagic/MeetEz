@@ -36,6 +36,7 @@ import java.util.ArrayList;
 public class Dashboard extends Activity implements OnClickListener {
 
     private String[] resultArray;
+    private int countButtonIndex = 0;
     private ArrayList<String[]> values = new ArrayList<>();
     private ArrayList<TextView> textViews = new ArrayList<>();
 
@@ -89,6 +90,8 @@ public class Dashboard extends Activity implements OnClickListener {
             layoutParams.leftMargin = -100;
             view.setLayoutParams(layoutParams);
             // TODO declare backout button here
+            Button backout = new Button(Dashboard.this);
+
             //backout = (Button) findViewById(R.id.backout);
             //backout.setVisibility(View.GONE);
             //backout.setOnClickListener(this);
