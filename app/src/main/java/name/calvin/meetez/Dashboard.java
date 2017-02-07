@@ -43,9 +43,6 @@ public class Dashboard extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        //backout = (Button) findViewById(R.id.backout);
-        //backout.setVisibility(View.GONE);
-        //backout.setOnClickListener(this);
     }
 
     @Override
@@ -91,7 +88,10 @@ public class Dashboard extends Activity implements OnClickListener {
             //noinspection ResourceType
             layoutParams.leftMargin = -100;
             view.setLayoutParams(layoutParams);
-            // declare backout button here
+            // TODO declare backout button here
+            //backout = (Button) findViewById(R.id.backout);
+            //backout.setVisibility(View.GONE);
+            //backout.setOnClickListener(this);
             //backout.setVisibility(View.VISIBLE);
             return true;
         }
