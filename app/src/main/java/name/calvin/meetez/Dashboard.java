@@ -34,8 +34,6 @@ public class Dashboard extends Activity implements OnClickListener {
 
     private String[] recordArray, resultArray;
     private String[][] values;
-    private SharedPreferences prefs;
-    private SharedPreferences.Editor prefsEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +188,7 @@ public class Dashboard extends Activity implements OnClickListener {
                     relativeLayout.addView(meetingevent);
                 }
                 SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
-                prefsEdit = prefs.edit();
+                SharedPreferences.Editor prefsEdit = prefs.edit();
                 prefsEdit.putString("eventName", resultArray[1]);
                 prefsEdit.commit();
             }
