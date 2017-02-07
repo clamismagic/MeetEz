@@ -3,6 +3,7 @@ package name.calvin.meetez;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -59,8 +60,10 @@ public class Dashboard extends Activity implements OnClickListener {
                 "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
         });
 
-       /* SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        prefsEdit = prefs.edit();*/
+        SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
+        prefsEdit = prefs.edit();
+        prefsEdit.putString("eventName",/*put EventName here*/);
+        prefsEdit.commit();
     }
 
     private OnClickListener click_listener = new OnClickListener() {
@@ -126,10 +129,10 @@ public class Dashboard extends Activity implements OnClickListener {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.backout:
+            /*case R.id.backout:
                 Dialogbox dialog = new Dialogbox();
                 dialog.dialog(this);
-        }
+        }*/
     }
 
 
