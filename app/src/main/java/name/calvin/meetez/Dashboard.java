@@ -59,15 +59,7 @@ public class Dashboard extends Activity implements OnClickListener {
         }
 
         SendtoPHP sendtoPHP = new SendtoPHP();
-        sendtoPHP.execute(new String[]{
-                // TODO do 'join table' for events and eventsContacts and contacts
-                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
-        });
-
-        SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
-        prefsEdit = prefs.edit();
-        prefsEdit.putString("eventName",/*put EventName here*/);
-        prefsEdit.commit();
+        sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values[0][5]);
     }
 
     private OnClickListener click_listener = new OnClickListener() {
@@ -169,14 +161,17 @@ public class Dashboard extends Activity implements OnClickListener {
                         return text;
                     } catch (Exception e) {
                         System.out.println(e);
-                        return "Error selecting record!";
+                        return null;
                     }
                 }
             }
 
             @Override
             protected void onPostExecute(String result) {
-                System.out.println(result);
+                if (result == null) {
+                    return;
+                }
+                // TODO configure logic between MySQL and SQLite
                 recordArray = result.split("\\?");
                 int i = 0;
                 for (String singleRecord : recordArray) {
@@ -187,7 +182,10 @@ public class Dashboard extends Activity implements OnClickListener {
                     meetingevent.setOnLongClickListener(long_click_listener);
                     meetingevent.setOnClickListener(click_listener);
                 }
-
+                SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
+                prefsEdit = prefs.edit();
+                prefsEdit.putString("eventName",/*put EventName here*/);
+                prefsEdit.commit();
             }
         }
     }
