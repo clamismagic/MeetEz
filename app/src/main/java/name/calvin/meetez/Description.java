@@ -15,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,7 +39,12 @@ public class Description extends Activity implements OnClickListener {
         editParticipants.setOnClickListener(click_listener);
     }
 
-
+    protected void onResume(Bundle savedInstanceState) {
+        SendtoPHP sendtoPHP = new SendtoPHP();
+        sendtoPHP.execute(new String[]{
+                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
+        });
+    }
 
     private OnClickListener click_listener = new OnClickListener() {
 
@@ -65,6 +72,7 @@ public class Description extends Activity implements OnClickListener {
 
         }
     }
+
     private class SendtoPHP extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
             String text = "";
@@ -106,15 +114,15 @@ public class Description extends Activity implements OnClickListener {
             recordArray = result.split("\\?");
             for (String singleRecord : recordArray) {
                 resultArray = singleRecord.split("\\|");
-                TextView Date = (TextView)findViewById(R.id.date);
-                TextView Time = (TextView)findViewById(R.id.time);
-                TextView Venue = (TextView)findViewById(R.id.venue);
-                meetingevent.setText(resultArray[1]);
-                meetingevent.setId(10000 + i++);
-                meetingevent.setOnLongClickListener(long_click_listener);
-                meetingevent.setOnClickListener(click_listener);
-                relativeLayout.addView(meetingevent);
-           Date.append();
+                TextView Date = (TextView) findViewById(R.id.date);
+                TextView Time = (TextView) findViewById(R.id.time);
+                TextView Venue = (TextView) findViewById(R.id.venue);
+                TextView Desc = (TextView) findViewById(R.id.description);
+                Date.append(resultArray[2]);
+                Time.append(resultArray[0]);
+                Venue.append(resultArray[3]);
+                Desc.append(resultArray[4]);
+            }
         }
     }
 }
