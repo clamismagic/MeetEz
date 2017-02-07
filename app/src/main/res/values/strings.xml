@@ -13,6 +13,9 @@
     <string name="participantName">Participant 1</string>
     <string name="addParticipant">Add Participant</string>
 
+    <!-- Dashboard Activity -->
+    <string name="noevents">You have no events!</string>
+
     <!-- AdHocMeeting Activity -->
     <string name="adhocpax">Choose the number of people attending the meeting:</string>
     <string name="choosenumber">--Please choose--</string>
