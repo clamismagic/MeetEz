@@ -52,6 +52,8 @@ public class Dashboard extends Activity implements OnClickListener {
         File dbFile = this.getDatabasePath(Constants.EVENTS_TABLE);
         if (!dbFile.exists()) {
             // TODO make dialog box for new user signup
+            Dialogbox newUser = new Dialogbox();
+            newUser.newUser(this);
         } else {
             EventsData events = new EventsData(this);
             EventsMethods eventsMethods = new EventsMethods();
