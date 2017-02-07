@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -64,21 +66,19 @@ public class Dashboard extends Activity implements OnClickListener {
         }
 
         SendtoPHP sendtoPHP = new SendtoPHP();
-        sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values[0][5]);
+        sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values[0][6]);
     }
 
     private OnClickListener click_listener = new OnClickListener() {
 
         @Override
         public void onClick(View view) {
-
+            // TODO implement putExtra into intent and delete switch statements
             Intent intent = null;
             switch (view.getId()) {
                 case R.id.meetingevent1:
                     intent = new Intent(getApplicationContext(), Description.class);
-                    if (intent != null) {
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
                     break;
             }
         }
@@ -173,13 +173,16 @@ public class Dashboard extends Activity implements OnClickListener {
 
             @Override
             protected void onPostExecute(String result) {
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.dashboardrelative);
                 if (result == null) {
+                    TextView noEvent = new TextView(Dashboard.this);
+                    noEvent.setText(R.string.noevents);
+                    noEvent.setId(R.id.noevents);
+                    relativeLayout.addView(noEvent);
                     return;
                 }
-                // TODO configure logic between MySQL and SQLite
                 recordArray = result.split("\\?");
                 int i = 0;
-                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.dashboardrelative);
                 for (String singleRecord : recordArray) {
                     resultArray = singleRecord.split("\\|");
                     TextView meetingevent = new TextView(Dashboard.this);

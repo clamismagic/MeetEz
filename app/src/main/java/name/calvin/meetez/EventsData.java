@@ -20,6 +20,7 @@ public class EventsData extends SQLiteOpenHelper {
                 + " (" + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + EVENT_NAME + " TEXT NOT NULL, "
                 + EVENT_DATE + " DATE NOT NULL, "
+                + EVENT_TIME + " TEXT NOT NULL, "
                 + EVENT_VENUE + " TEXT NOT NULL, "
                 + EVENT_DESCRIPTION + " TEXT NOT NULL, "
                 + EVENT_PARTICIPANTS + " TEXT NOT NULL,"
