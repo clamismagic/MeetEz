@@ -59,7 +59,7 @@ public class Dashboard extends Activity implements OnClickListener {
         }
 
         SendtoPHP sendtoPHP = new SendtoPHP();
-        sendtoPHP.execute(new String[] {
+        sendtoPHP.execute(new String[]{
                 // TODO do 'join table' for events and eventsContacts and contacts
                 "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
         });
@@ -137,57 +137,59 @@ public class Dashboard extends Activity implements OnClickListener {
                 Dialogbox dialog = new Dialogbox();
                 dialog.dialog(this);
         }*/
+        }
     }
 
 
-    private class SendtoPHP extends AsyncTask<String, Void, String> {
-        protected String doInBackground(String... urls) {
-            String text = "";
-            try {
-                URL url = new URL(urls[0]);
-                URLConnection conn = url.openConnection();
-                InputStream inputStream = conn.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                // Read Server Response
-                while ((line = reader.readLine()) != null) {
-                    // Append server response in string
-                    sb.append(line + "\n");
-                }
-                System.out.println("test success!");
-
-                text = sb.toString();
-                System.out.println(text);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
+        private class SendtoPHP extends AsyncTask<String, Void, String> {
+            protected String doInBackground(String... urls) {
+                String text = "";
                 try {
-                    return text;
+                    URL url = new URL(urls[0]);
+                    URLConnection conn = url.openConnection();
+                    InputStream inputStream = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+
+                    // Read Server Response
+                    while ((line = reader.readLine()) != null) {
+                        // Append server response in string
+                        sb.append(line + "\n");
+                    }
+                    System.out.println("test success!");
+
+                    text = sb.toString();
+                    System.out.println(text);
+
                 } catch (Exception e) {
-                    System.out.println(e);
-                    return "Error selecting record!";
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        return text;
+                    } catch (Exception e) {
+                        System.out.println(e);
+                        return "Error selecting record!";
+                    }
                 }
             }
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            System.out.println(result);
-            recordArray = result.split("\\?");
-            int i = 0;
-            for (String singleRecord : recordArray) {
-                resultArray = singleRecord.split("\\|");
-                TextView meetingevent = new TextView(Dashboard.this);
-                meetingevent.setText(resultArray[1]);
-                meetingevent.setId(10000 + i++);
-                meetingevent.setOnLongClickListener(long_click_listener);
-                meetingevent.setOnClickListener(click_listener);
+            @Override
+            protected void onPostExecute(String result) {
+                System.out.println(result);
+                recordArray = result.split("\\?");
+                int i = 0;
+                for (String singleRecord : recordArray) {
+                    resultArray = singleRecord.split("\\|");
+                    TextView meetingevent = new TextView(Dashboard.this);
+                    meetingevent.setText(resultArray[1]);
+                    meetingevent.setId(10000 + i++);
+                    meetingevent.setOnLongClickListener(long_click_listener);
+                    meetingevent.setOnClickListener(click_listener);
+                }
+
             }
-
         }
     }
-}
+
 
