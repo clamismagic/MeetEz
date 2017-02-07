@@ -14,10 +14,10 @@
     <string name="participantName">参加者 1</string>
 
     <!-- Dashboard Activity -->
-    <string name="noevents">你没参与任何的活动或会议！</string>
+    <string name="noevents">您没参与任何的活动或会议！</string>
 
     <!-- adHocMeeting Activity -->
-    <string name="adhocpax">请选择出席此会议的人数：</string>
+    <string name="adhocpax">请选择出席此活动或会议的人数：</string>
     <string name="choosenumber">--请选择--</string>
     <string name="address">地址</string>
     <string name="submit">确认</string>
