@@ -44,6 +44,11 @@ public class Dashboard extends Activity implements OnClickListener {
         //backout = (Button) findViewById(R.id.backout);
         //backout.setVisibility(View.GONE);
         //backout.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         File dbFile = this.getDatabasePath(Constants.EVENTS_TABLE);
         if (!dbFile.exists()) {
             // TODO make dialog box for new user signup
@@ -174,6 +179,7 @@ public class Dashboard extends Activity implements OnClickListener {
                 // TODO configure logic between MySQL and SQLite
                 recordArray = result.split("\\?");
                 int i = 0;
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.dashboardrelative);
                 for (String singleRecord : recordArray) {
                     resultArray = singleRecord.split("\\|");
                     TextView meetingevent = new TextView(Dashboard.this);
@@ -181,10 +187,11 @@ public class Dashboard extends Activity implements OnClickListener {
                     meetingevent.setId(10000 + i++);
                     meetingevent.setOnLongClickListener(long_click_listener);
                     meetingevent.setOnClickListener(click_listener);
+                    relativeLayout.addView(meetingevent);
                 }
                 SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
                 prefsEdit = prefs.edit();
-                prefsEdit.putString("eventName",/*put EventName here*/);
+                prefsEdit.putString("eventName", resultArray[1]);
                 prefsEdit.commit();
             }
         }
