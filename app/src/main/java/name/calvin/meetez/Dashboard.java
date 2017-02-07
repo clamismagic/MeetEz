@@ -31,11 +31,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 public class Dashboard extends Activity implements OnClickListener {
 
-    private String[] recordArray, resultArray;
-    private String[][] values;
+    private String[] resultArray;
+    private ArrayList<String[]> values = new ArrayList<>();
+    private ArrayList<TextView> textViews = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +63,21 @@ public class Dashboard extends Activity implements OnClickListener {
             String[] records = resultSQLite.split("\\n");
             int i = 0;
             for (String eachRecord : records) {
-                values[i++] = eachRecord.split("\\t");
+                values.add(eachRecord.split("\\t"));
             }
         }
 
         SendtoPHP sendtoPHP = new SendtoPHP();
-        sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values[0][6]);
+        sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values.get(0)[6]);
     }
 
     private OnClickListener click_listener = new OnClickListener() {
 
         @Override
         public void onClick(View view) {
-            // TODO implement putExtra into intent and delete switch statements
-            Intent intent = null;
-            switch (view.getId()) {
-                case R.id.meetingevent1:
-                    intent = new Intent(getApplicationContext(), Description.class);
-                    startActivity(intent);
-                    break;
-            }
+            Intent intent = new Intent(getApplicationContext(), Description.class);
+            intent.putExtra("eventName", ((TextView) view).getText());
+            startActivity(intent);
         }
 
     };
@@ -181,7 +178,7 @@ public class Dashboard extends Activity implements OnClickListener {
                     relativeLayout.addView(noEvent);
                     return;
                 }
-                recordArray = result.split("\\?");
+                String[] recordArray = result.split("\\?");
                 int i = 0;
                 for (String singleRecord : recordArray) {
                     resultArray = singleRecord.split("\\|");
@@ -191,6 +188,7 @@ public class Dashboard extends Activity implements OnClickListener {
                     meetingevent.setOnLongClickListener(long_click_listener);
                     meetingevent.setOnClickListener(click_listener);
                     relativeLayout.addView(meetingevent);
+                    textViews.add(meetingevent);
                 }
                 SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEdit = prefs.edit();
