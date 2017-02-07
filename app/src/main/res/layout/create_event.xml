@@ -4,10 +4,9 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="Meeting Event #1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/meetingevent1"
+        android:id="@+id/meetingevent"
         android:textSize="45sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
