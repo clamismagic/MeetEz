@@ -83,7 +83,6 @@ public class Dialogbox {
     }
 
     ;
-    private String[] recordArray, resultArray;
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
