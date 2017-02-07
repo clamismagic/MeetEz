@@ -12,5 +12,6 @@
         <item>9</item>
         <item>10</item>
     </string-array>
-    <item type="id" name="submitButton"></item>
+    <item type="id" name="submitButton" />
+    <item type="id" name="noevents" />
 </resources>

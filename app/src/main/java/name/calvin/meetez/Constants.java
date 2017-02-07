@@ -8,6 +8,7 @@ public class Constants implements BaseColumns {
     // columns in the events table
     public static final String EVENT_NAME = "eventName";
     public static final String EVENT_DATE = "date";
+    public static final String EVENT_TIME = "time";
     public static final String EVENT_VENUE = "venue";
     public static final String EVENT_DESCRIPTION = "description";
     public static final String EVENT_PARTICIPANTS = "participants";
