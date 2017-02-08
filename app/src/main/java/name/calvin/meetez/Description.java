@@ -57,7 +57,7 @@ public class Description extends Activity implements OnClickListener {
         }
         VerifyJoin verifyJoin = new VerifyJoin();
         verifyJoin.execute(new String[]{
-                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,%20contacts%20c%20where%20e.eventID=ec.eventID%20and%20ec.contactID=c.contactID%20and%20e.eventName=" + eventName + "%20and%20c.contactNo=" + values.get(0)[7]
+                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,%20contacts%20c%20where%20e.eventID=ec.eventID%20and%20ec.contactID=c.contactID%20and%20e.eventName=" + eventName + "%20and%20c.contactNo=" + values.get(0)[6]
         });
 
         SendtoPHP sendtoPHP = new SendtoPHP();

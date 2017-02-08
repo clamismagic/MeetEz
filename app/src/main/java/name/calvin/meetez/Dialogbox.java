@@ -93,6 +93,7 @@ public class Dialogbox {
                 sendtoPHP.execute(new String[]{
                         "https://mappdb-clamismagic.rhcloud.com/createContacts.php?name=" + username + "&contactNo=" + userphone
                 });
+
             }
         });
         AlertDialog alert = builder.create();
