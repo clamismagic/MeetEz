@@ -52,7 +52,6 @@ public class Description extends Activity implements OnClickListener {
         EventsMethods eventsMethods = new EventsMethods();
         String resultSQLite = eventsMethods.showEvents(eventsMethods.getEvents(events));
         String[] records = resultSQLite.split("\\n");
-        int i = 0;
         for (String eachRecord : records) {
             values.add(eachRecord.split("\\t"));
         }
