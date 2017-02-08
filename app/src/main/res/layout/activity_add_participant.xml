@@ -17,7 +17,6 @@
         android:textColor="#0008ff"/>
 
     <TextView
-        android:text="@string/participantName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/participantName"
