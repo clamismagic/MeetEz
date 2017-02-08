@@ -3,15 +3,19 @@
     <string name="backout">Back out</string>
     <string name="create_event">Create Event</string>
     <string name="location_gen">Location Generator</string>
-    <string name="date">Date :</string>
-    <string name="time">Time :</string>
-    <string name="venue">Venue :</string>
     <string name="participants">Participants</string>
-    <string name="description">Description :</string>
-    <string name="delete">Delete</string>
     <string name="editparticipants">Edit Participants</string>
     <string name="participantName">Participant 1</string>
     <string name="addParticipant">Add Participant</string>
+    <string name="delete">Delete</string>
+
+    <!-- Create Event / Description -->
+    <string name="date">Date :</string>
+    <string name="time">Time :</string>
+    <string name="venue">Venue :</string>
+    <string name="description">Description :</string>
+
+
 
     <!-- Dashboard Activity -->
     <string name="noevents">You have no events!</string>

@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,7 +18,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class CreateEvent extends Activity{
+public class CreateEvent extends Activity implements View.OnClickListener {
 
     private Button createevent;
 
@@ -30,6 +32,19 @@ public class CreateEvent extends Activity{
     @Override
     protected void onResume() {
         super.onResume();
+
+        EditText date = (EditText)findViewById(R.id.dateedit);
+        EditText time = (EditText)findViewById(R.id.timeedit);
+        EditText venue = (EditText)findViewById(R.id.venueedit);
+        EditText description = (EditText)findViewById(R.id.descedit);
+
+        createevent.setOnClickListener(CreateEvent.this);
+
+
+    }
+
+    @Override
+    public void onClick(View view) {
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
                 "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName= &date= &time= &venue= &description= "

@@ -42,9 +42,10 @@ public class Description extends Activity implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+        // TODO getExtras
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
-                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events"
+                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20where%20eventName=" + eventName
         });
     }
 
