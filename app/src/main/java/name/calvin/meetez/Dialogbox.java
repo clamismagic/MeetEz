@@ -124,6 +124,35 @@ public class Dialogbox {
             }
 
         }
+
+    public void participants (final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Are you sure you want to remove this participant?");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing but close the dialog
+                {
+                    Toast.makeText(context, "You have removed the participant", Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Do nothing
+                dialog.dismiss();
+
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
     }
 
 
