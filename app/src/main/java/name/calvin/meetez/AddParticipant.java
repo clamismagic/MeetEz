@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,18 +30,16 @@ public class AddParticipant extends Activity implements OnClickListener {
     private Button add;
     static final Integer CONTACTS = 0x1;
     public TextView outputText;
+    public CheckBox checkBox;
+    public ArrayList<Integer> textViews = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_participant);
         askForPermission(READ_CONTACTS, CONTACTS);
-        add = (Button) findViewById(R.id.add);
-        add.setOnClickListener(this);
-        add.setEnabled(false);
-        outputText = (TextView)findViewById(R.id.participantName);
         fetchContacts();
-        CheckBox checkBox = (CheckBox)findViewById(R.id.addParticipant);
+        //CheckBox checkBox = (CheckBox)findViewById(R.id.addParticipant);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -48,6 +50,9 @@ public class AddParticipant extends Activity implements OnClickListener {
                 }
             }
         });
+        add = (Button) findViewById(R.id.add);
+        add.setOnClickListener(this);
+        add.setEnabled(false);
     }
 
 
@@ -145,7 +150,18 @@ public class AddParticipant extends Activity implements OnClickListener {
                 output.append("|");
             }
             String[] results = output.toString().split("\\|");
-            outputText.setText(results[0]);
+            LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.addparticipantPage);
+            for (int i = 0; i < results.length; i ++){
+                outputText = new TextView(this);
+                outputText.setText(results[i]);
+                outputText.setId(2000 + i);
+                textViews.add(2000 + i);
+                mLinearLayout.addView(outputText);
+                checkBox = new CheckBox(this);
+                checkBox.setId(3000 + i);
+                mLinearLayout.addView(checkBox);
+            }
+//            outputText.setText(results[i]);
         }
     }
 }
