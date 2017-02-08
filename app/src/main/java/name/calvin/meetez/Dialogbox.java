@@ -77,7 +77,7 @@ public class Dialogbox {
         alert.show();
     }
 
-    public void newUserPhone(Context context) {
+    public void newUserPhone(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.newuserphone);
         builder.setTitle(R.string.app_name);
@@ -92,6 +92,8 @@ public class Dialogbox {
                 sendtoPHP.execute(new String[]{
                         "https://mappdb-clamismagic.rhcloud.com/createContacts.php?name=" + username + "&contactNo=" + userphone
                 });
+                EventsData eventsData = new EventsData(context);
+                eventsData.onCreate(eventsData.getWritableDatabase());
             }
         });
         AlertDialog alert = builder.create();
@@ -134,7 +136,6 @@ public class Dialogbox {
         @Override
         protected void onPostExecute(String result) {
             System.out.println(result);
-
         }
 
     }
