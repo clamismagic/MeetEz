@@ -13,6 +13,11 @@
     <string name="editparticipants">编辑参加者</string>
     <string name="participantName">参加者 1</string>
 
+    <!-- Dialog box -->
+    <string name="newusername">欢迎您加入“相聚容易”! 请输入您的姓名：</string>
+    <string name="newuserphone">再请您输入您的电话号码：</string>
+    <string name="okay">确认</string>
+
     <!-- Dashboard Activity -->
     <string name="noevents">您没参与任何的活动或会议！</string>
 

@@ -16,7 +16,10 @@
     <string name="description">Description :</string>
     <string name="join">Join</string>
 
-
+    <!-- Dialog box -->
+    <string name="newusername">Welcome to MeetEz! Please input your name:</string>
+    <string name="newuserphone">Also, please input your phone number:</string>
+    <string name="okay">OK</string>
 
     <!-- Dashboard Activity -->
     <string name="noevents">You have no events!</string>
