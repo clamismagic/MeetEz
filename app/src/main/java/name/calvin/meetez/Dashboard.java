@@ -1,29 +1,18 @@
 package name.calvin.meetez;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.view.View.OnLongClickListener;
 import android.view.View.OnClickListener;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.content.SharedPreferences;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,10 +22,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class Dashboard extends Activity implements OnClickListener {
+public class Dashboard extends Activity {
 
     private String[] resultArray;
-    private int countButtonIndex = 0;
     private ArrayList<String[]> values = new ArrayList<>();
     private ArrayList<TextView> textViews = new ArrayList<>();
 
@@ -51,7 +39,6 @@ public class Dashboard extends Activity implements OnClickListener {
         super.onResume();
         File dbFile = this.getDatabasePath(Constants.EVENTS_TABLE);
         if (!dbFile.exists()) {
-            // TODO make dialog box for new user signup
             Dialogbox newUser = new Dialogbox();
             newUser.newUser(this);
         } else {
@@ -59,7 +46,6 @@ public class Dashboard extends Activity implements OnClickListener {
             EventsMethods eventsMethods = new EventsMethods();
             String resultSQLite = eventsMethods.showEvents(eventsMethods.getEvents(events));
             String[] records = resultSQLite.split("\\n");
-            int i = 0;
             for (String eachRecord : records) {
                 values.add(eachRecord.split("\\t"));
             }
@@ -78,26 +64,6 @@ public class Dashboard extends Activity implements OnClickListener {
             startActivity(intent);
         }
 
-    };
-
-    /*     Making the button appear when text is long pressed */
-    private OnLongClickListener long_click_listener = new OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            // meetingevent1.;
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-            //noinspection ResourceType
-            layoutParams.leftMargin = -100;
-            view.setLayoutParams(layoutParams);
-            // TODO declare backout button here
-            Button backout = new Button(Dashboard.this);
-
-            //backout = (Button) findViewById(R.id.backout);
-            //backout.setVisibility(View.GONE);
-            //backout.setOnClickListener(this);
-            //backout.setVisibility(View.VISIBLE);
-            return true;
-        }
     };
 
     /* making the hamburger */
@@ -127,18 +93,7 @@ public class Dashboard extends Activity implements OnClickListener {
         return false;
     }
 
-
-    public void onClick(View v) {
-        switch (v.getId()) {
-            /*case R.id.backout:
-                Dialogbox dialog = new Dialogbox();
-                dialog.dialog(this);
-        }*/
-        }
-    }
-
-
-        private class SendtoPHP extends AsyncTask<String, Void, String> {
+    private class SendtoPHP extends AsyncTask<String, Void, String> {
             protected String doInBackground(String... urls) {
                 String text = "";
                 try {
@@ -173,12 +128,12 @@ public class Dashboard extends Activity implements OnClickListener {
 
             @Override
             protected void onPostExecute(String result) {
-                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.dashboardrelative);
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
                 if (result == null) {
                     TextView noEvent = new TextView(Dashboard.this);
                     noEvent.setText(R.string.noevents);
                     noEvent.setId(R.id.noevents);
-                    relativeLayout.addView(noEvent);
+                    linearLayout.addView(noEvent);
                     return;
                 }
                 String[] recordArray = result.split("\\?");
@@ -188,9 +143,8 @@ public class Dashboard extends Activity implements OnClickListener {
                     TextView meetingevent = new TextView(Dashboard.this);
                     meetingevent.setText(resultArray[1]);
                     meetingevent.setId(10000 + i++);
-                    meetingevent.setOnLongClickListener(long_click_listener);
                     meetingevent.setOnClickListener(click_listener);
-                    relativeLayout.addView(meetingevent);
+                    linearLayout.addView(meetingevent);
                     textViews.add(meetingevent);
                 }
                 SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
