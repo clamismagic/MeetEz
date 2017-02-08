@@ -43,6 +43,7 @@ public class Description extends Activity implements OnClickListener {
     protected void onResume() {
         super.onResume();
         // TODO getExtras
+        String eventName = getIntent().getExtras().getString("eventName");
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
                 "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20where%20eventName=" + eventName

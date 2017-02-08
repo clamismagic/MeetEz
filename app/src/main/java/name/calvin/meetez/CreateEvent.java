@@ -3,6 +3,7 @@ package name.calvin.meetez;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class CreateEvent extends Activity implements View.OnClickListener {
         sendtoPHP.execute(new String[]{
                 "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName= &date= &time= &venue= &description= "
         });
+
     }
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {
@@ -89,6 +91,8 @@ public class CreateEvent extends Activity implements View.OnClickListener {
             if (result == null) {
                 return;
             }
+            Intent intent = new Intent(getApplicationContext(),Dashboard.class);
+            startActivity(intent);
 
         }
     }
