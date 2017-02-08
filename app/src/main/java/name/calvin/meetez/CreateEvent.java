@@ -34,11 +34,6 @@ public class CreateEvent extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
 
-        EditText date = (EditText)findViewById(R.id.dateedit);
-        EditText time = (EditText)findViewById(R.id.timeedit);
-        EditText venue = (EditText)findViewById(R.id.venueedit);
-        EditText description = (EditText)findViewById(R.id.descedit);
-
         createevent.setOnClickListener(CreateEvent.this);
 
 
@@ -46,9 +41,16 @@ public class CreateEvent extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
+        String eventName = getIntent().getExtras().getString("eventName");
+        EditText date = (EditText)findViewById(R.id.dateedit);
+        EditText time = (EditText)findViewById(R.id.timeedit);
+        EditText venue = (EditText)findViewById(R.id.venueedit);
+        EditText description = (EditText)findViewById(R.id.descedit);
+
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
-                "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName= &date= &time= &venue= &description= "
+                "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName=" + eventName +"&date=" + date + "&time=" + time + "&venue=" + venue + "&description=" + description
         });
 
     }
