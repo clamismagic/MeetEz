@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -92,8 +93,6 @@ public class Dialogbox {
                 sendtoPHP.execute(new String[]{
                         "https://mappdb-clamismagic.rhcloud.com/createContacts.php?name=" + username + "&contactNo=" + userphone
                 });
-                EventsData eventsData = new EventsData(context);
-                eventsData.onCreate(eventsData.getWritableDatabase());
             }
         });
         AlertDialog alert = builder.create();

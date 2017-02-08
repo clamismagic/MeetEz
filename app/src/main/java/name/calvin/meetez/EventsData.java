@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class EventsData extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "mapp.db";
+    public static final String DATABASE_NAME = "mapp.db";
     private static final int DATABASE_VERSION = 1;
 
     // creating a helper object

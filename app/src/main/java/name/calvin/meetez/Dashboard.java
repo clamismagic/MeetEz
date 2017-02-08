@@ -3,6 +3,11 @@ package name.calvin.meetez;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.SharedPreferences;
 
+import com.google.android.gms.vision.text.Line;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -22,12 +29,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import static name.calvin.meetez.EventsData.DATABASE_NAME;
+
 public class Dashboard extends Activity {
 
     private String[] resultArray;
     private ArrayList<String[]> values = new ArrayList<>();
     private ArrayList<TextView> textViews = new ArrayList<>();
-    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,27 +46,37 @@ public class Dashboard extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        File dbFile = this.getDatabasePath(Constants.EVENTS_TABLE);
-        if (!dbFile.exists()) {
-            System.out.println("no db file.");
-            Dialogbox newUser = new Dialogbox();
-            newUser.newUserName(this);
-            TextView noEvent = new TextView(Dashboard.this);
-            noEvent.setText(R.string.noevents);
-            noEvent.setId(R.id.noevents);
-            linearLayout.addView(noEvent);
-        } else {
-            System.out.println("db file present.");
-            EventsData events = new EventsData(this);
+        SQLiteDatabase db = null;
             EventsMethods eventsMethods = new EventsMethods();
+            EventsData events = new EventsData(this);
             String resultSQLite = eventsMethods.showEvents(eventsMethods.getEvents(events));
+        if (!resultSQLite.equals("")) {
             String[] records = resultSQLite.split("\\n");
             for (String eachRecord : records) {
                 values.add(eachRecord.split("\\t"));
             }
-            System.out.println("it runs till here!");
-            SendtoPHP sendtoPHP = new SendtoPHP();
-            sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values.get(0)[6]);
+            if (isConnectedToInternet()) {
+                SendtoPHP sendtoPHP = new SendtoPHP();
+                sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values.get(0)[7]);
+            } else {
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
+                for (int i = 1; i < values.size(); i++) {
+                    TextView meetingevent = new TextView(this);
+                    meetingevent.setText(values.get(i)[1]);
+                    meetingevent.setId(10000 + i++);
+                    meetingevent.setOnClickListener(click_listener);
+                    linearLayout.addView(meetingevent);
+                    textViews.add(meetingevent);
+                }
+            }
+        } else {
+            Dialogbox newUser = new Dialogbox();
+            newUser.newUserName(this);
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
+            TextView noEvent = new TextView(Dashboard.this);
+            noEvent.setText(R.string.noevents);
+            noEvent.setId(R.id.noevents);
+            linearLayout.addView(noEvent);
         }
     }
 
@@ -99,6 +117,22 @@ public class Dashboard extends Activity {
         return false;
     }
 
+    public boolean isConnectedToInternet(){
+        ConnectivityManager connectivity = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+
+        }
+        return false;
+    }
+
     private class SendtoPHP extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
             String text = "";
@@ -134,6 +168,7 @@ public class Dashboard extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
             if (result == null) {
                 TextView noEvent = new TextView(Dashboard.this);
                 noEvent.setText(R.string.noevents);
