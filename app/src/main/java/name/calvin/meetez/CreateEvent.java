@@ -43,16 +43,18 @@ public class CreateEvent extends Activity implements View.OnClickListener {
     public void onClick(View view) {
 
         String eventName = getIntent().getExtras().getString("eventName");
-        EditText date = (EditText)findViewById(R.id.dateedit);
-        EditText time = (EditText)findViewById(R.id.timeedit);
-        EditText venue = (EditText)findViewById(R.id.venueedit);
-        EditText description = (EditText)findViewById(R.id.descedit);
+        String date = ((EditText)findViewById(R.id.dateedit)).getText().toString();
+        String time = ((EditText)findViewById(R.id.timeedit)).getText().toString();
+        String venue = ((EditText)findViewById(R.id.venueedit)).getText().toString();
+        String description = ((EditText)findViewById(R.id.descedit)).getText().toString();
 
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
                 "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName=" + eventName +"&date=" + date + "&time=" + time + "&venue=" + venue + "&description=" + description
         });
-
+        EventsMethods eventsMethods = new EventsMethods();
+        EventsData eventsData = new EventsData(this);
+        eventsMethods.addEvent(eventName, date, time, venue, description, "", eventsMethods.showEvents(eventsMethods.getEvents(eventsData)).split("\\n")[0].split("\\t")[6], eventsData);
     }
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {

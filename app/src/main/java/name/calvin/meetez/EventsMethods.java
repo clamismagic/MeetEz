@@ -23,6 +23,13 @@ public class EventsMethods {
         db.insertOrThrow(EVENTS_TABLE, null, values);
     }
 
+    public void updateParticipants(String participants, EventsData events) {
+        SQLiteDatabase db = events.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(EVENT_PARTICIPANTS, participants);
+        db.update(EVENTS_TABLE, cv, "_ID=SELECT MAX(_ID) FROM " + EVENTS_TABLE, null);
+    }
+
     public Cursor getEvents(EventsData events) {
         SQLiteDatabase db = events.getReadableDatabase();
         return db.query(EVENTS_TABLE, FROM, null, null, null, null, ORDER_BY);
