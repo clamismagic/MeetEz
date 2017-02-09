@@ -47,6 +47,7 @@ public class Dashboard extends Activity {
         textViews.clear();
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         userphone = prefs.getString("userphone", "");
+        System.out.println("force update");
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
         linearLayout.removeAllViews();
         String resultSQLite = eventsMethods.showEvents(eventsMethods.getEvents(events));
