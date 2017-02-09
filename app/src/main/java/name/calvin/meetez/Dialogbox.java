@@ -93,7 +93,10 @@ public class Dialogbox {
                 sendtoPHP.execute(new String[]{
                         "https://mappdb-clamismagic.rhcloud.com/createContacts.php?name=" + username + "&contactNo=" + userphone
                 });
-
+                SharedPreferences prefs = context.getSharedPreferences("userphone", Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEdit = prefs.edit();
+                prefsEdit.putString("userphone", userphone);
+                prefsEdit.commit();
             }
         });
         AlertDialog alert = builder.create();

@@ -54,7 +54,7 @@ public class CreateEvent extends Activity implements View.OnClickListener {
         });
         EventsMethods eventsMethods = new EventsMethods();
         EventsData eventsData = new EventsData(this);
-        eventsMethods.addEvent(eventName, date, time, venue, description, "", eventsMethods.showEvents(eventsMethods.getEvents(eventsData)).split("\\n")[0].split("\\t")[6], eventsData);
+        eventsMethods.addEvent(eventName, date, time, venue, description, "", eventsMethods.showEvents(eventsMethods.getEvents(eventsData)).split("\\n")[1].split("\\t")[6], eventsData);
     }
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {

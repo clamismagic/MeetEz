@@ -30,6 +30,12 @@ public class EventsMethods {
         db.update(EVENTS_TABLE, cv, "_ID=SELECT MAX(_ID) FROM " + EVENTS_TABLE, null);
     }
 
+    public void deleteAllEvents(EventsData events) {
+        SQLiteDatabase db = events.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EVENTS_TABLE);
+        addEvent("Filler event", "2000-01-01", "0000", "Filler Venue", "Filler Description", "Filler Participants", "Filler contact", events);
+    }
+
     public Cursor getEvents(EventsData events) {
         SQLiteDatabase db = events.getReadableDatabase();
         return db.query(EVENTS_TABLE, FROM, null, null, null, null, ORDER_BY);
