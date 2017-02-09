@@ -39,7 +39,7 @@ public class Participants extends Activity implements OnClickListener{
         LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.addparticipantPage);
         SendtoPHP sendtoPHP = new SendtoPHP();
         sendtoPHP.execute(new String[]{
-                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20where%20eventName=" + eventName
+                "https://mappdb-clamismagic.rhcloud.com/select.php?tablename=eventContacts%20ec,contacts%20c%20where%ec.eventID=(select%20eventID%20from%20events%20where%20eventName=\"" + eventName + "\"&ec.contactID=c.contactID)"
         });
         for (int i = 0; i < resultArray.length; i ++){
             outputText = new TextView(this);
