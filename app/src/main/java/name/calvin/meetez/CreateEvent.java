@@ -54,6 +54,11 @@ public class CreateEvent extends Activity implements View.OnClickListener {
                 "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName=" + eventName +"&date=" + date + "&time=" + time + "&venue=" + venue + "&description=" + description
         });
 
+        EventContact eventContact = new EventContact();
+        eventContact.execute(new String[] {
+                "http://mappdb-clamismagic.rhcloud.com/createEventContacts.php?eventID=(select%20eventID%20from%20events%20where%20eventName=\"" + eventName + "\")&contactID=(select%20contactID%20from%20contacts%20where%20contactNo=" + phoneNo + ")"
+        });
+
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         phoneNo = prefs.getString("phoneNo", "");
 
@@ -63,6 +68,50 @@ public class CreateEvent extends Activity implements View.OnClickListener {
     }
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            String text = "";
+            try {
+                URL url = new URL(urls[0]);
+                URLConnection conn = url.openConnection();
+                InputStream inputStream = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                // Read Server Response
+                while ((line = reader.readLine()) != null) {
+                    // Append server response in string
+                    sb.append(line + "\n");
+                }
+                System.out.println("test success!");
+
+                text = sb.toString();
+                System.out.println(text);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    return text;
+                } catch (Exception e) {
+                    System.out.println(e);
+                    return null;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result == null) {
+                return;
+            }
+            Intent intent = new Intent(getApplicationContext(),Dashboard.class);
+            startActivity(intent);
+
+        }
+    }
+
+    private class EventContact extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
             String text = "";
             try {
