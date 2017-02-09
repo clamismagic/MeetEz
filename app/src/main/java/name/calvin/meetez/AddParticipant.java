@@ -27,7 +27,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class AddParticipant extends Activity implements OnClickListener {
 
-    private Button add;
+    private Button addButton;
     static final Integer CONTACTS = 0x1;
     public TextView outputText;
     public CheckBox checkBox;
@@ -39,20 +39,8 @@ public class AddParticipant extends Activity implements OnClickListener {
         setContentView(R.layout.activity_add_participant);
         askForPermission(READ_CONTACTS, CONTACTS);
         fetchContacts();
-        //CheckBox checkBox = (CheckBox)findViewById(R.id.addParticipant);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    add.setEnabled(true);
-                }else {
-                    add.setEnabled(false);
-                }
-            }
-        });
-        add = (Button) findViewById(R.id.add);
-        add.setOnClickListener(this);
-        add.setEnabled(false);
+        addButton.setOnClickListener(this);
+        addButton.setEnabled(false);
     }
 
 
@@ -80,14 +68,13 @@ public class AddParticipant extends Activity implements OnClickListener {
                 ActivityCompat.requestPermissions(AddParticipant.this, new String[]{permission}, requestCode);
             }
         } else {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
     public void fetchContacts() {
 
         String phoneNumber = null;
-        String email = null;
 
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
         String _ID = ContactsContract.Contacts._ID;
@@ -98,15 +85,13 @@ public class AddParticipant extends Activity implements OnClickListener {
         String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
         String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
 
-        Uri EmailCONTENT_URI =  ContactsContract.CommonDataKinds.Email.CONTENT_URI;
-        String EmailCONTACT_ID = ContactsContract.CommonDataKinds.Email.CONTACT_ID;
-        String DATA = ContactsContract.CommonDataKinds.Email.DATA;
-
         StringBuffer output = new StringBuffer();
 
         ContentResolver contentResolver = getContentResolver();
 
         Cursor cursor = contentResolver.query(CONTENT_URI, null,null, null, null);
+
+        int num = 0;
 
         // Loop for every contact in the phone
         if (cursor.getCount() > 0) {
@@ -132,19 +117,6 @@ public class AddParticipant extends Activity implements OnClickListener {
                     }
 
                     phoneCursor.close();
-
-                    // Query and loop for every email of the contact
-                    Cursor emailCursor = contentResolver.query(EmailCONTENT_URI,	null, EmailCONTACT_ID+ " = ?", new String[] { contact_id }, null);
-
-                    while (emailCursor.moveToNext()) {
-
-                        email = emailCursor.getString(emailCursor.getColumnIndex(DATA));
-
-                        output.append(email);
-
-                    }
-
-                    emailCursor.close();
                 }
 
                 output.append("|");
@@ -155,13 +127,28 @@ public class AddParticipant extends Activity implements OnClickListener {
                 outputText = new TextView(this);
                 outputText.setText(results[i]);
                 outputText.setId(2000 + i);
+                outputText.setTextAppearance(this, R.style.ParticipantName);
                 textViews.add(2000 + i);
                 mLinearLayout.addView(outputText);
                 checkBox = new CheckBox(this);
                 checkBox.setId(3000 + i);
                 mLinearLayout.addView(checkBox);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            addButton.setEnabled(true);
+                        } else {
+                            addButton.setEnabled(false);
+                        }
+                    }
+                });
             }
-//            outputText.setText(results[i]);
+            addButton = new Button(AddParticipant.this);
+            addButton.setText(R.string.addParticipant);
+            addButton.setId(R.id.add);
+            mLinearLayout.addView(addButton);
+            addButton.setOnClickListener(AddParticipant.this);
         }
     }
 }

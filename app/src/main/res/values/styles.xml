@@ -5,4 +5,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ParticipantName">
+        <item name="android:textSize">35sp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="AddButton">
+        <item name="android:textSize">30sp</item>
+    </style>
+
 </resources>
