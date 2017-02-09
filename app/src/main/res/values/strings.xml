@@ -15,6 +15,7 @@
     <string name="venue">Venue :</string>
     <string name="description">Description :</string>
     <string name="join">Join</string>
+    <string name="eventName">Name of Event :</string>
 
     <!-- Dialog box -->
     <string name="newusername">Welcome to MeetEz! Please input your name:</string>
