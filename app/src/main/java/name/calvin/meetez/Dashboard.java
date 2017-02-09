@@ -27,8 +27,11 @@ import java.util.ArrayList;
 public class Dashboard extends Activity {
 
     private String[] resultArray;
+    private String userphone;
     private ArrayList<String[]> values = new ArrayList<>();
     private ArrayList<TextView> textViews = new ArrayList<>();
+    private final EventsMethods eventsMethods = new EventsMethods();
+    private final EventsData events = new EventsData(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,11 @@ public class Dashboard extends Activity {
         values.clear();
         resultArray = null;
         textViews.clear();
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        userphone = prefs.getString("userphone", "");
+        System.out.println("force update");
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dashboardlinear);
         linearLayout.removeAllViews();
-        SQLiteDatabase db = null;
-        EventsMethods eventsMethods = new EventsMethods();
-        EventsData events = new EventsData(this);
         String resultSQLite = eventsMethods.showEvents(eventsMethods.getEvents(events));
         if (!resultSQLite.equals("")) {
             String[] records = resultSQLite.split("\\n");
@@ -55,8 +58,12 @@ public class Dashboard extends Activity {
             }
             System.out.println(values.get(0)[2]);
             if (isConnectedToInternet()) {
-                SendtoPHP sendtoPHP = new SendtoPHP();
-                sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + values.get(0)[6]);
+                    SendtoPHP sendtoPHP = new SendtoPHP();
+                    sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + userphone);
+                    TextView noEvent = new TextView(Dashboard.this);
+                    noEvent.setText(R.string.noevents);
+                    noEvent.setId(R.id.noevents);
+                    linearLayout.addView(noEvent);
             } else {
                 int i;
                 for (i = 1; i < values.size(); i++) {
@@ -173,6 +180,7 @@ public class Dashboard extends Activity {
             try {
                 String[] recordArray = result.split("\\?");
                 int i = 0;
+                eventsMethods.deleteAllEvents(events);
                 for (String singleRecord : recordArray) {
                     resultArray = singleRecord.split("\\|");
                     TextView meetingevent = new TextView(Dashboard.this);
@@ -181,6 +189,7 @@ public class Dashboard extends Activity {
                     meetingevent.setOnClickListener(click_listener);
                     linearLayout.addView(meetingevent);
                     textViews.add(meetingevent);
+                    eventsMethods.addEvent(resultArray[1], resultArray[2], resultArray[3], resultArray[4], resultArray[5], "", userphone, events);
                 }
                 SharedPreferences prefs = getSharedPreferences("eventName", Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEdit = prefs.edit();

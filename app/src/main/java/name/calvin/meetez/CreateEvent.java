@@ -22,6 +22,7 @@ import java.net.URLConnection;
 public class CreateEvent extends Activity implements View.OnClickListener {
 
     private Button createevent;
+    private String phoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class CreateEvent extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        String eventName = getIntent().getExtras().getString("eventName");
+        String eventName = ((EditText)findViewById(R.id.eventNameedit)).getText().toString();
         String date = ((EditText)findViewById(R.id.dateedit)).getText().toString();
         String time = ((EditText)findViewById(R.id.timeedit)).getText().toString();
         String venue = ((EditText)findViewById(R.id.venueedit)).getText().toString();
@@ -52,9 +53,13 @@ public class CreateEvent extends Activity implements View.OnClickListener {
         sendtoPHP.execute(new String[]{
                 "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName=" + eventName +"&date=" + date + "&time=" + time + "&venue=" + venue + "&description=" + description
         });
+
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        phoneNo = prefs.getString("phoneNo", "");
+
         EventsMethods eventsMethods = new EventsMethods();
         EventsData eventsData = new EventsData(this);
-        eventsMethods.addEvent(eventName, date, time, venue, description, "", eventsMethods.showEvents(eventsMethods.getEvents(eventsData)).split("\\n")[0].split("\\t")[6], eventsData);
+        eventsMethods.addEvent(eventName, date, time, venue, description, "", phoneNo , eventsData);
     }
 
     private class SendtoPHP extends AsyncTask<String, Void, String> {
