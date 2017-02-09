@@ -2,7 +2,9 @@ package name.calvin.meetez;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,6 +40,7 @@ public class AddParticipant extends Activity implements OnClickListener {
     public TextView outputText;
     public CheckBox checkBox;
     public ArrayList<Integer> textViews = new ArrayList<>();
+    private String phoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +55,12 @@ public class AddParticipant extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add:
-                CreateEvent.SendtoPHP sendtoPHP = new CreateEvent.SendtoPHP();
+                String eventName = new Intent().getExtras().toString();
+                SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+                phoneNo = prefs.getString("phoneNo", "");
+                SendtoPHP sendtoPHP = new SendtoPHP();
                 sendtoPHP.execute(new String[]{
-                        "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName=" + eventName +"&date=" + date + "&time=" + time + "&venue=" + venue + "&description=" + description
+                        "https://mappdb-clamismagic.rhcloud.com/createEventContacts.php?eventID=(select%20eventID%20from%20events%20where%20eventName='" + eventName + "')&contactID=(select%20contactID%20from%20contacts%20where%20contactNo=" + phoneNo + ")"
                 });
                 Toast.makeText(getBaseContext(), "You just added new participant(s).", Toast.LENGTH_SHORT).show();
                 finish();
