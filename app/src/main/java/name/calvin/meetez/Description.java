@@ -29,7 +29,7 @@ public class Description extends Activity implements OnClickListener {
     private Button delete;
     private Button editParticipants;
     private String[] recordArray, resultArray;
-    String eventName = getIntent().getExtras().getString("eventName");
+    String eventName = getIntent().getStringExtra("eventName");
     private ArrayList<String[]> values = new ArrayList<>();
 
 

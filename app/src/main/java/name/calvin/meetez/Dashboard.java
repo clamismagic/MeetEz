@@ -101,8 +101,8 @@ public class Dashboard extends Activity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(getApplicationContext(), Description.class);
-                intent.putExtra("eventName", ((TextView) view).getText());
+            Intent intent = new Intent(Dashboard.this, Description.class);
+                intent.putExtra("eventName", ((TextView) view).getText().toString());
             startActivity(intent);
         }
     };
