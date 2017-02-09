@@ -2,9 +2,11 @@ package name.calvin.meetez;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +23,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -28,7 +35,6 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class AddParticipant extends Activity implements OnClickListener {
 
     private Button addButton;
-    static final Integer CONTACTS = 0x1;
     public TextView outputText;
     public CheckBox checkBox;
     public ArrayList<Integer> textViews = new ArrayList<>();
@@ -37,7 +43,6 @@ public class AddParticipant extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_participant);
-        askForPermission(READ_CONTACTS, CONTACTS);
         fetchContacts();
         addButton.setOnClickListener(this);
         addButton.setEnabled(false);
@@ -47,30 +52,17 @@ public class AddParticipant extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add:
+                CreateEvent.SendtoPHP sendtoPHP = new CreateEvent.SendtoPHP();
+                sendtoPHP.execute(new String[]{
+                        "https://mappdb-clamismagic.rhcloud.com/createEvents.php?eventName=" + eventName +"&date=" + date + "&time=" + time + "&venue=" + venue + "&description=" + description
+                });
                 Toast.makeText(getBaseContext(), "You just added new participant(s).", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }
     }
 
-    private void askForPermission(String permission, Integer requestCode) {
-        if (ContextCompat.checkSelfPermission(AddParticipant.this, permission) != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(AddParticipant.this, permission)) {
-
-                //This is called if user has denied the permission before
-                //In this case I am just asking the permission again
-                ActivityCompat.requestPermissions(AddParticipant.this, new String[]{permission}, requestCode);
-
-            } else {
-
-                ActivityCompat.requestPermissions(AddParticipant.this, new String[]{permission}, requestCode);
-            }
-        } else {
-
-        }
-    }
 
     public void fetchContacts() {
 
@@ -149,6 +141,47 @@ public class AddParticipant extends Activity implements OnClickListener {
             addButton.setId(R.id.add);
             mLinearLayout.addView(addButton);
             addButton.setOnClickListener(AddParticipant.this);
+        }
+    }
+    private class SendtoPHP extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            String text = "";
+            try {
+                URL url = new URL(urls[0]);
+                URLConnection conn = url.openConnection();
+                InputStream inputStream = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                // Read Server Response
+                while ((line = reader.readLine()) != null) {
+                    // Append server response in string
+                    sb.append(line + "\n");
+                }
+                System.out.println("test success!");
+
+                text = sb.toString();
+                System.out.println(text);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    return text;
+                } catch (Exception e) {
+                    System.out.println(e);
+                    return null;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result == null) {
+                return;
+            }
+
         }
     }
 }

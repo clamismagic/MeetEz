@@ -3,11 +3,14 @@ package name.calvin.meetez;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +26,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import static android.Manifest.permission.READ_CONTACTS;
+
 
 public class Dashboard extends Activity {
 
@@ -32,11 +37,13 @@ public class Dashboard extends Activity {
     private ArrayList<TextView> textViews = new ArrayList<>();
     private final EventsMethods eventsMethods = new EventsMethods();
     private final EventsData events = new EventsData(this);
+    static final Integer CONTACTS = 0x1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
+        askForPermission(READ_CONTACTS, CONTACTS);
     }
 
     @Override
@@ -201,6 +208,24 @@ public class Dashboard extends Activity {
                 noEvent.setId(R.id.noevents);
                 linearLayout.addView(noEvent);
             }
+        }
+    }
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(Dashboard.this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Dashboard.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(Dashboard.this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(Dashboard.this, new String[]{permission}, requestCode);
+            }
+        } else {
+
         }
     }
 }
