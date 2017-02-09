@@ -105,8 +105,7 @@ public class CreateEvent extends Activity implements View.OnClickListener {
             if (result == null) {
                 return;
             }
-            Intent intent = new Intent(getApplicationContext(),Dashboard.class);
-            startActivity(intent);
+            ;
 
         }
     }
@@ -151,7 +150,6 @@ public class CreateEvent extends Activity implements View.OnClickListener {
             }
             Intent intent = new Intent(getApplicationContext(),Dashboard.class);
             startActivity(intent);
-
         }
     }
 }
