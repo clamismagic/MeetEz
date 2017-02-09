@@ -1,6 +1,5 @@
 package name.calvin.meetez;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 

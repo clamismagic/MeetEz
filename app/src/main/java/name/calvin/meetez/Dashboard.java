@@ -66,7 +66,7 @@ public class Dashboard extends Activity {
             System.out.println(values.get(0)[2]);
             if (isConnectedToInternet()) {
                     SendtoPHP sendtoPHP = new SendtoPHP();
-                    sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=12345678");
+                    sendtoPHP.execute("https://mappdb-clamismagic.rhcloud.com/select.php?tablename=events%20e,eventContacts%20ec,contacts%20c%20where%20e.eventID%20=%20ec.eventID%20and%20c.contactID%20=%20ec.contactID%20and%20c.contactNo%20=" + userphone);
                     TextView noEvent = new TextView(Dashboard.this);
                     noEvent.setText(R.string.noevents);
                     noEvent.setId(R.id.noevents);
