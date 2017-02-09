@@ -42,7 +42,7 @@ public class CreateEvent extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        String eventName = getIntent().getExtras().getString("eventName");
+        String eventName = ((EditText)findViewById(R.id.eventNameedit)).getText().toString();
         String date = ((EditText)findViewById(R.id.dateedit)).getText().toString();
         String time = ((EditText)findViewById(R.id.timeedit)).getText().toString();
         String venue = ((EditText)findViewById(R.id.venueedit)).getText().toString();
