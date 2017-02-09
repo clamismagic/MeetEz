@@ -56,7 +56,7 @@ public class CreateEvent extends Activity implements View.OnClickListener {
 
         EventContact eventContact = new EventContact();
         eventContact.execute(new String[] {
-                "http://mappdb-clamismagic.rhcloud.com/createEventContacts.php?eventID=(select%20eventID%20from%20events%20where%20eventName='" + eventName + "')&contactID=(select%20contactID%20from%20contacts%20where%20contactNo=" + phoneNo + ")"
+                "http://mappdb-clamismagic.rhcloud.com/createEventContacts.php?eventID=(select%20eventID%20from%20events%20where%20eventName=\"" + eventName + "\")&contactID=(select%20contactID%20from%20contacts%20where%20contactNo=" + phoneNo + ")"
         });
 
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
